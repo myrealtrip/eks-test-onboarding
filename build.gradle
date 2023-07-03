@@ -42,7 +42,7 @@ subprojects {
     apply plugin: "idea"
     apply plugin: "io.spring.dependency-management"
 
-    def javaVersion = JavaVersion.VERSION_17
+    def javaVersion = JavaVersion.VERSION_11
 
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion

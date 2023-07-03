@@ -8,8 +8,8 @@ import com.myrealtrip.skeleton.domain.sample.es.entity.Post;
 import com.myrealtrip.skeleton.domain.sample.http.HttpSampleService;
 import com.myrealtrip.skeleton.domain.sample.jpa.JpaSampleService;
 import com.myrealtrip.skeleton.domain.sample.kafka.KafkaSampleService;
-import com.myrealtrip.skeleton.domain.sample.mybatis.MybatisSampleService;
-import com.myrealtrip.skeleton.domain.sample.redis.RedisSampleService;
+//import com.myrealtrip.skeleton.domain.sample.mybatis.MybatisSampleService;
+//import com.myrealtrip.skeleton.domain.sample.redis.RedisSampleService;
 import com.myrealtrip.skeleton.domain.sample.redis.entity.RedisSampleCache;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -34,25 +34,25 @@ public class SampleController {
     private KafkaSampleService kafkaSampleService;
     private ElasticsearchSampleService elasticsearchSampleService;
     private HttpSampleService httpSampleService;
-    private MybatisSampleService mybatisSampleService;
+//    private MybatisSampleService mybatisSampleService;
 
-    @GetMapping(path = "/sample/mybatis/member-retrieve")
-    @ApiOperation(value = "MyBatis 조회 API 샘플 - Dynamic Query")
-    public List<MemberDto> retrieveMember(MemberDto memberDto) {
-        return mybatisSampleService.findMember(memberDto);
-    }
+//    @GetMapping(path = "/sample/mybatis/member-retrieve")
+//    @ApiOperation(value = "MyBatis 조회 API 샘플 - Dynamic Query")
+//    public List<MemberDto> retrieveMember(MemberDto memberDto) {
+//        return mybatisSampleService.findMember(memberDto);
+//    }
+//
+//    @GetMapping(path = "/sample/mybatis/member")
+//    @ApiOperation(value = "MyBatis ID 기반 조회")
+//    public MemberDto getMemberByMybatis(@RequestParam("id") Long id) {
+//        return mybatisSampleService.getMember(id);
+//    }
 
-    @GetMapping(path = "/sample/mybatis/member")
-    @ApiOperation(value = "MyBatis ID 기반 조회")
-    public MemberDto getMemberByMybatis(@RequestParam("id") Long id) {
-        return mybatisSampleService.getMember(id);
-    }
-
-    @GetMapping(path = "/sample/mybatis/organization")
-    @ApiOperation(value = "MyBatis ID 기반 조회")
-    public OrganizationDto getOrganizationByMybatis(@RequestParam("id") Long id) {
-        return mybatisSampleService.getOrganization(id);
-    }
+//    @GetMapping(path = "/sample/mybatis/organization")
+//    @ApiOperation(value = "MyBatis ID 기반 조회")
+//    public OrganizationDto getOrganizationByMybatis(@RequestParam("id") Long id) {
+//        return mybatisSampleService.getOrganization(id);
+//    }
 
     @GetMapping(path = "/test-response")
     @ApiOperation(value = "Request Test용")
