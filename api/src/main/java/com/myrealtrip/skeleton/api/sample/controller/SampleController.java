@@ -81,59 +81,59 @@ public class SampleController {
         return "Async Call with Callback";
     }
 
-    @PutMapping(path = "/sample/es/save")
-    @ApiOperation(value = "Elasticsearch 저장 샘플")
-    public Post saveES(@RequestBody Post post) {
-        return elasticsearchSampleService.savePost(post);
-    }
-
-    @GetMapping(path = "/sample/es/get")
-    @ApiOperation(value = "Elasticsearch ID 기반 조회 샘플")
-    public Post getEs(@RequestParam("id") String id) {
-        return elasticsearchSampleService.findById(id).orElseThrow();
-    }
-
-    @GetMapping(path = "/sample/es/get-list")
-    @ApiOperation(value = "Elasticsearch list 조회 샘플")
-    public List<Post> getEsList(@RequestParam("title") String title) {
-        return elasticsearchSampleService.findByTitle(title);
-    }
-
-    @GetMapping(path = "/sample/kafka/send")
-    @ApiOperation(value = "Kafka publish sample")
-    public void sendTopic(@RequestParam("topic") String topic, @RequestParam("payload") String payload) {
-        kafkaSampleService.sendMessage(topic, payload);
-    }
-
-    @GetMapping(path = "/sample/kafka/sendWithCallback")
-    @ApiOperation(value = "Kafka publish with callback sample")
-    public void sendTopicWithCallback(@RequestParam("topic") String topic, @RequestParam("payload") String payload) {
-        kafkaSampleService.sendMessageWithCallback(topic, payload);
-    }
-
-    @PutMapping(path = "/sample/jpa/member/save")
-    @ApiOperation(value = "JPA 저장 샘플")
-    public MemberDto saveMember(@RequestBody MemberDto memberDto) {
-        return jpaSampleService.saveMember(memberDto);
-    }
-
-    @GetMapping(path = "/sample/jpa/organization/save")
-    @ApiOperation(value = "JPA 저장 샘플")
-    public OrganizationDto setOrganization(OrganizationDto organizationDto) {
-        return jpaSampleService.saveOrganization(organizationDto);
-    }
-
-    @GetMapping(path = "/sample/jpa/member/{id}")
-    @ApiOperation(value = "JPA ID 기반 조회")
-    public MemberDto getMember(@PathVariable(name = "id") Long id) {
-        return jpaSampleService.getMember(id);
-    }
-
-    @GetMapping(path = "/sample/jpa/organization/{id}")
-    @ApiOperation(value = "JPA ID 기반 조회")
-    public OrganizationDto getOrganization(@PathVariable(name = "id") Long id) {
-        return jpaSampleService.getOrganization(id);
-    }
+//    @PutMapping(path = "/sample/es/save")
+//    @ApiOperation(value = "Elasticsearch 저장 샘플")
+//    public Post saveES(@RequestBody Post post) {
+//        return elasticsearchSampleService.savePost(post);
+//    }
+//
+//    @GetMapping(path = "/sample/es/get")
+//    @ApiOperation(value = "Elasticsearch ID 기반 조회 샘플")
+//    public Post getEs(@RequestParam("id") String id) {
+//        return elasticsearchSampleService.findById(id).orElseThrow();
+//    }
+//
+//    @GetMapping(path = "/sample/es/get-list")
+//    @ApiOperation(value = "Elasticsearch list 조회 샘플")
+//    public List<Post> getEsList(@RequestParam("title") String title) {
+//        return elasticsearchSampleService.findByTitle(title);
+//    }
+//
+//    @GetMapping(path = "/sample/kafka/send")
+//    @ApiOperation(value = "Kafka publish sample")
+//    public void sendTopic(@RequestParam("topic") String topic, @RequestParam("payload") String payload) {
+//        kafkaSampleService.sendMessage(topic, payload);
+//    }
+//
+//    @GetMapping(path = "/sample/kafka/sendWithCallback")
+//    @ApiOperation(value = "Kafka publish with callback sample")
+//    public void sendTopicWithCallback(@RequestParam("topic") String topic, @RequestParam("payload") String payload) {
+//        kafkaSampleService.sendMessageWithCallback(topic, payload);
+//    }
+//
+//    @PutMapping(path = "/sample/jpa/member/save")
+//    @ApiOperation(value = "JPA 저장 샘플")
+//    public MemberDto saveMember(@RequestBody MemberDto memberDto) {
+//        return jpaSampleService.saveMember(memberDto);
+//    }
+//
+//    @GetMapping(path = "/sample/jpa/organization/save")
+//    @ApiOperation(value = "JPA 저장 샘플")
+//    public OrganizationDto setOrganization(OrganizationDto organizationDto) {
+//        return jpaSampleService.saveOrganization(organizationDto);
+//    }
+//
+//    @GetMapping(path = "/sample/jpa/member/{id}")
+//    @ApiOperation(value = "JPA ID 기반 조회")
+//    public MemberDto getMember(@PathVariable(name = "id") Long id) {
+//        return jpaSampleService.getMember(id);
+//    }
+//
+//    @GetMapping(path = "/sample/jpa/organization/{id}")
+//    @ApiOperation(value = "JPA ID 기반 조회")
+//    public OrganizationDto getOrganization(@PathVariable(name = "id") Long id) {
+//        return jpaSampleService.getOrganization(id);
+//    }
 
 //    @GetMapping(path = "/sample/redis/upsert")
 //    @ApiOperation(value = "RedisTemplate 기반 저장")

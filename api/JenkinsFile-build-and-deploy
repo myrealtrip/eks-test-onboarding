@@ -17,7 +17,8 @@ pipeline {
 
     parameters {
         string(name: 'BRANCH', defaultValue: 'develop', description: '이 브랜치 기준으로 빌드 및 배포합니다.')
-        string(name: 'STACK_NAME', defaultValue: 'dev', description: '배포할 stack 이름. Deployment spec에 정의된 stack 이름. 예) dev, qa01, ...')
+        choice(name: 'STACK_NAME', description: '배포할 stack 이름. Deployment spec에 정의된 stack 이름',
+                    choices: ['dev', 'dev01', 'dev02', 'test', 'test01', 'test02'])
         booleanParam(name: 'DRY_RUN', defaultValue: false, description: '체크된 경우 실제로 배포되지 않음')
     }
 
