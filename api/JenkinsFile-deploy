@@ -1,0 +1,39 @@
+@Library('mrt3-jenkins-library@master') _
+
+pipeline {
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(
+            logRotator(
+                numToKeepStr: '10',
+                daysToKeepStr: '30',
+            )
+        )
+    }
+
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'develop', description: '이 브랜치의 api/Jenkinsfile-eksdemo-deploy 파일로 배포합니다.')
+        string(name: 'STACK_NAME', defaultValue: 'qa01', description: '배포할 stack 이름. Deployment spec에 정의된 stack 이름. 예) dev, qa01, ...')
+        string(name: 'DOCKER_TAG', defaultValue: '', description: '배포할 docker tag. DYNAMIC_TAG 변수를 사용하지 않는 stack은 이 값을 무시합니다.')
+        booleanParam(name: 'DRY_RUN', defaultValue: false, description: '체크된 경우 실제로 배포되지 않음')
+    }
+
+    stages {
+        stage('Deploy') {
+            steps {
+                mrtEksDeploy([
+                    project     : 'eks-test-onboarding',
+                    component   : 'api',
+                    stack       : "${params.STACK_NAME}",
+                    dryRun      : "${params.DRY_RUN}",
+                    templatePath: '/specs/eks-test-onboarding/api/dev.jsonnet',
+                    dynamicVars : [
+                        DYNAMIC_TAG: "${params.DOCKER_TAG}"
+                    ]
+                ])
+            }
+        }
+    }
+}

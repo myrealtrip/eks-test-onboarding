@@ -1,0 +1,58 @@
+@Library('mrt3-jenkins-library@master') _
+
+def buildResult
+
+pipeline {
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(
+            logRotator(
+                numToKeepStr: '10',
+                daysToKeepStr: '30',
+            )
+        )
+    }
+
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'develop', description: '이 브랜치 기준으로 빌드 및 배포합니다.')
+        string(name: 'STACK_NAME', defaultValue: 'dev', description: '배포할 stack 이름. Deployment spec에 정의된 stack 이름. 예) dev, qa01, ...')
+        booleanParam(name: 'DRY_RUN', defaultValue: false, description: '체크된 경우 실제로 배포되지 않음')
+    }
+
+    stages {
+        stage('Docker Build') {
+            steps {
+                script {
+                    buildResult = mrtEksBuildDocker([
+                        project            : 'eks-test-onboarding',
+                        component          : 'api',
+                        dockerfile         : 'Dockerfile-spring-boot',
+                        dockerfileBuildArgs: [
+                            'SUB_MODULE_NAME': 'api',
+                            'JAVA_VERSION'   : '11'
+                        ]
+                    ])
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    mrtEksDeploy([
+                        project     : 'eks-test-onboarding',
+                        component   : 'api',
+                        stack       : "${params.STACK_NAME}",
+                        dryRun      : "${params.DRY_RUN}",
+                        templatePath: '/specs/eks-test-onboarding/api/dev.jsonnet',
+                        dynamicVars : [
+                            'DYNAMIC_TAG': buildResult.tag
+                        ]
+                    ])
+                }
+            }
+        }
+    }
+}
