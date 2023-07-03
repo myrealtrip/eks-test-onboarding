@@ -1,0 +1,28 @@
+dependencies {
+    implementation(project(":infrastructure"))
+    implementation(project(":core"))
+
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    // MyBatis
+    implementation("org.mybatis:mybatis:${mybatisVersion}")
+    implementation("org.mybatis:mybatis-spring:${springMybatisVersion}")
+
+    // Mapstruct
+    implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+
+    // Kafka
+    implementation("org.springframework.kafka:spring-kafka:${springKafkaVersion}")
+
+    // ElasticSearch
+    implementation("org.springframework.data:spring-data-elasticsearch:${springElasticSearchVersion}")
+
+    // HttpClient (Retrofit)
+    implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
+    implementation("com.squareup.retrofit2:converter-jackson:${retrofitJacksonVersion}")
+}

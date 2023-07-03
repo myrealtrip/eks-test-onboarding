@@ -1,0 +1,16 @@
+plugins {
+    id "org.springframework.boot"
+}
+
+dependencies {
+    implementation(project(":infrastructure"))
+    implementation(project(":core"))
+    implementation(project(":domain"))
+
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+    implementation("io.springfox:springfox-swagger2:${swaggerVersion}")
+    implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
+}

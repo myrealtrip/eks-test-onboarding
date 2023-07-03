@@ -1,0 +1,29 @@
+@Library('mrt3-jenkins-library@develop') _
+
+pipeline {
+  agent any
+
+  stages {
+    stage('Build') {
+      steps {
+        mrtBuildForJar()
+      }
+    }
+    stage('Push Revision') {
+      steps {
+        mrtPushRevisionForDefualtOpenJDKDockerAmiJar()
+      }
+    }
+    stage('Deploy') {
+      steps {
+        mrtDeploy()
+      }
+    }
+  }
+
+  environment {
+    SUB_MODULE_NAME = 'api'
+    APPLICATION_NAME = ''
+    SPRING_PROFILES_ACTIVE = 'dev'
+  }
+}

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | %-35logger{0}:%-4L | [%thread] %msg%n%rEx{full, org, sun, javax, mysql}</pattern>
+        </encoder>
+    </appender>
+
+    <property name="LOG_ROOT_PATH" value="/myrealtrip/"/>
+    <property name="LOG_PATH" value="${LOG_ROOT_PATH}/logs/bootApp"/>
+
+
+    <springProperty scope="context" name="ACTIVE_PROFILE" source="spring.profiles.active"/>
+
+    <!--spring profile-->
+    <springProfile name="prod">
+        <logger name="org.springframework" level="WARN"/>
+        <logger name="org.apache" level="WARN"/>
+        <logger name="com.myrealtrip" level="INFO"/>
+
+        <appender name="dailyFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_PATH}/bootApp.log</file>
+            <append>true</append>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | %-35logger{0}:%-4L | [%thread] %msg%n%rEx{full, org, sun, javax, mysql}</pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/bootApp.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <maxFileSize>500MB</maxFileSize>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+        </appender>
+
+        <root level="WARN">
+            <appender-ref ref="dailyFile"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="stage">
+        <logger name="org.springframework" level="WARN"/>
+        <logger name="org.apache" level="WARN"/>
+        <logger name="com.myrealtrip" level="DEBUG"/>
+
+        <appender name="dailyFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_PATH}/bootApp.log</file>
+            <append>true</append>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | %-35logger{0}:%-4L | [%thread] %msg%n%rEx{full, org, sun, javax, mysql}</pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/bootApp.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <maxFileSize>500MB</maxFileSize>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+        </appender>
+
+        <root level="DEBUG">
+            <appender-ref ref="dailyFile"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <logger name="org.springframework" level="WARN"/>
+        <logger name="org.apache" level="WARN"/>
+        <logger name="com.myrealtrip" level="DEBUG"/>
+
+        <appender name="dailyFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_PATH}/bootApp.log</file>
+            <append>true</append>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | %-35logger{0}:%-4L | [%thread] %msg%n%rEx{full, org, sun, javax, mysql}</pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/bootApp.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <maxFileSize>500MB</maxFileSize>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+        </appender>
+
+        <root level="DEBUG">
+            <appender-ref ref="console"/>
+            <appender-ref ref="dailyFile"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="dev">
+        <logger name="org.springframework" level="WARN"/>
+        <logger name="org.apache" level="WARN"/>
+        <logger name="com.myrealtrip" level="DEBUG"/>
+
+        <appender name="dailyFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_PATH}/bootApp.log</file>
+            <append>true</append>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | %-35logger{0}:%-4L | [%thread] %msg%n%rEx{full, org, sun, javax, mysql}</pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/bootApp.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <maxFileSize>500MB</maxFileSize>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+        </appender>
+
+        <root level="DEBUG">
+            <appender-ref ref="console"/>
+            <appender-ref ref="dailyFile"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="local">
+        <logger name="org.springframework" level="ERROR"/>
+        <logger name="org.apache" level="ERROR"/>
+        <logger name="com.myrealtrip" level="DEBUG"/>
+
+        <root level="DEBUG">
+            <appender-ref ref="console"/>
+        </root>
+    </springProfile>
+</configuration>

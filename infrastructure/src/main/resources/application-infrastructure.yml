@@ -1,0 +1,369 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    group:
+      "local": "local"
+      "dev": "dev"
+      "test": "test"
+      "stage": "stage"
+      "prod": "prod"
+myrealtrip:
+  base-package: "com.myrealtrip"
+server:
+  max-http-header-size: 16KB
+---
+spring:
+  config:
+    activate:
+      on-profile: "local"
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+  datasource:
+    readWrite:
+      jdbc-url: jdbc:mysql://localhost:3306/mysql-local?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      username: mysql-local
+      password: mysql-local
+      pool-name: hikari-cp
+      maximum-pool-size: 20
+      minimum-idle: 2
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+    readOnly:
+      jdbc-url: jdbc:mysql://localhost:13306/mysql-local-slave?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      username: mysql-local-slave
+      password: mysql-local-slave
+      pool-name: hikari-cp-slave
+      maximum-pool-size: 20
+      minimum-idle: 2
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  flyway:
+    schemas: mysql-local
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+    encoding: UTF-8
+    locations: [ "classpath:db/migration" ]
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    topics: ["topic1", "topic2"]
+  elasticsearch:
+    rest:
+      uris: "localhost:9200"
+myrealtrip:
+  test-servers: "http://localhost:8080"
+  redis:
+    singleServerConfig:
+      idleConnectionTimeout: 10000
+      connectTimeout: 10000
+      timeout: 3000
+      retryAttempts: 3
+      retryInterval: 1500
+      password: null
+      subscriptionsPerConnection: 5
+      clientName: null
+      address: "redis://127.0.0.1:6379"
+      subscriptionConnectionMinimumIdleSize: 1
+      subscriptionConnectionPoolSize: 50
+      connectionMinimumIdleSize: 24
+      connectionPoolSize: 64
+      database: 0
+      dnsMonitoringInterval: 5000
+    threads: 16
+    nettyThreads: 32
+    codec: "FST"
+    transportMode: "NIO"
+---
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+  datasource:
+    readWrite:
+      jdbc-url: jdbc:mysql://localhost:3306/mysql-local?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      username: mysql-local
+      password: mysql-local
+      pool-name: hikari-cp
+      maximum-pool-size: 20
+      minimum-idle: 2
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+    readOnly:
+      jdbc-url: jdbc:mysql://localhost:3306/mysql-local?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      username: mysql-local
+      password: mysql-local
+      pool-name: hikari-cp
+      maximum-pool-size: 20
+      minimum-idle: 2
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  flyway:
+    schemas: mysql-local
+    enabled: false
+    baseline-on-migrate: true
+    baseline-version: 0
+    encoding: UTF-8
+    locations: [ "classpath:db/migration" ]
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    topics: ["topic1", "topic2"]
+  elasticsearch:
+    rest:
+      uris: "localhost:9200"
+myrealtrip:
+  test-servers: "http://localhost:8080"
+  redis:
+    singleServerConfig:
+      idleConnectionTimeout: 10000
+      connectTimeout: 10000
+      timeout: 3000
+      retryAttempts: 3
+      retryInterval: 1500
+      password: null
+      subscriptionsPerConnection: 5
+      clientName: null
+      address: "redis://127.0.0.1:6379"
+      subscriptionConnectionMinimumIdleSize: 1
+      subscriptionConnectionPoolSize: 50
+      connectionMinimumIdleSize: 24
+      connectionPoolSize: 64
+      database: 0
+      dnsMonitoringInterval: 5000
+    threads: 16
+    nettyThreads: 32
+    codec: "FST"
+    transportMode: "NIO"
+---
+spring:
+  config:
+    activate:
+      on-profile: "test"
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+  datasource:
+    readWrite:
+      jdbc-url: jdbc:mysql://localhost:3306/mysql-local?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      username: root
+      password: root
+      pool-name: hikari-cp
+      maximum-pool-size: 20
+      minimum-idle: 2
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+    readOnly:
+      jdbc-url: jdbc:mysql://localhost:3306/mysql-local?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      username: root
+      password: root
+      pool-name: hikari-cp
+      maximum-pool-size: 20
+      minimum-idle: 2
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  flyway:
+    schemas: mysql-local
+    enabled: false
+    baseline-on-migrate: true
+    baseline-version: 0
+    encoding: UTF-8
+    locations: [ "classpath:db/migration" ]
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    topics: ["topic1", "topic2"]
+  elasticsearch:
+    rest:
+      uris: "localhost:9200"
+myrealtrip:
+  test-servers: "http://localhost:8080"
+  redis:
+    singleServerConfig:
+      idleConnectionTimeout: 10000
+      connectTimeout: 10000
+      timeout: 3000
+      retryAttempts: 3
+      retryInterval: 1500
+      password: null
+      subscriptionsPerConnection: 5
+      clientName: null
+      address: "redis://127.0.0.1:6379"
+      subscriptionConnectionMinimumIdleSize: 1
+      subscriptionConnectionPoolSize: 50
+      connectionMinimumIdleSize: 24
+      connectionPoolSize: 64
+      database: 0
+      dnsMonitoringInterval: 5000
+    threads: 16
+    nettyThreads: 32
+    codec: "FST"
+    transportMode: "NIO"
+---
+spring:
+  config:
+    activate:
+      on-profile: "stage"
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+  datasource:
+    readWrite:
+      jdbc-url: jdbc:mysql://localhost:3306/mysql-local?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      username: mysql-local
+      password: mysql-local
+      pool-name: hikari-cp
+      maximum-pool-size: 30
+      minimum-idle: 2
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+    readOnly:
+      jdbc-url: jdbc:mysql://localhost:3306/mysql-local?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      username: mysql-local
+      password: mysql-local
+      pool-name: hikari-cp
+      maximum-pool-size: 30
+      minimum-idle: 2
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  flyway:
+    schemas: mysql-local
+    enabled: false
+    baseline-on-migrate: true
+    baseline-version: 0
+    encoding: UTF-8
+    locations: [ "classpath:db/migration" ]
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    topics: ["topic1", "topic2"]
+  elasticsearch:
+    rest:
+      uris: "localhost:9200"
+myrealtrip:
+  test-servers: "http://localhost:8080"
+  redis:
+    singleServerConfig:
+      idleConnectionTimeout: 10000
+      connectTimeout: 10000
+      timeout: 3000
+      retryAttempts: 3
+      retryInterval: 1500
+      password: null
+      subscriptionsPerConnection: 5
+      clientName: null
+      address: "redis://127.0.0.1:6379"
+      subscriptionConnectionMinimumIdleSize: 1
+      subscriptionConnectionPoolSize: 50
+      connectionMinimumIdleSize: 24
+      connectionPoolSize: 64
+      database: 0
+      dnsMonitoringInterval: 5000
+    threads: 16
+    nettyThreads: 32
+    codec: "FST"
+    transportMode: "NIO"
+---
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+  datasource:
+    readWrite:
+      jdbc-url: jdbc:mysql://localhost:3306/mysql-local?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      username: mysql-local
+      password: mysql-local
+      pool-name: hikari-cp
+      maximum-pool-size: 30
+      minimum-idle: 2
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+    readOnly:
+      jdbc-url: jdbc:mysql://localhost:3306/mysql-local?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF8
+      username: mysql-local
+      password: mysql-local
+      pool-name: hikari-cp
+      maximum-pool-size: 30
+      minimum-idle: 2
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  flyway:
+    schemas: mysql-local
+    enabled: false
+    baseline-on-migrate: true
+    baseline-version: 0
+    encoding: UTF-8
+    locations: [ "classpath:db/migration" ]
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    topics: ["topic1", "topic2"]
+  elasticsearch:
+    rest:
+      uris: "localhost:9200"
+myrealtrip:
+  test-servers: "http://localhost:8080"
+  redis:
+    singleServerConfig:
+      idleConnectionTimeout: 10000
+      connectTimeout: 10000
+      timeout: 3000
+      retryAttempts: 3
+      retryInterval: 1500
+      password: null
+      subscriptionsPerConnection: 5
+      clientName: null
+      address: "redis://127.0.0.1:6379"
+      subscriptionConnectionMinimumIdleSize: 1
+      subscriptionConnectionPoolSize: 50
+      connectionMinimumIdleSize: 24
+      connectionPoolSize: 64
+      database: 0
+      dnsMonitoringInterval: 5000
+    threads: 16
+    nettyThreads: 32
+    codec: "FST"
+    transportMode: "NIO"

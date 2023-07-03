@@ -1,0 +1,8 @@
+rootProject.name = 'eks-test-onboarding'
+
+include 'api'
+include 'batch'
+include 'client'
+include 'core'
+include 'domain'
+include 'infrastructure'

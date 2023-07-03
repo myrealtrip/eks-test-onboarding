@@ -1,0 +1,12 @@
+version: '2'
+services:
+  mongodb:
+    image: mongo
+    container_name: "mongo-local"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+      - MONGODB_USER="mongo-local"
+      - MONGODB_PASS="mongo-local"
+    ports:
+      - 27017:27017

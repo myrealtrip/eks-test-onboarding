@@ -1,0 +1,46 @@
+spring:
+  profiles:
+    group:
+      "local": "local"
+      "dev" : "dev"
+      "test" : "test"
+      "stage" : "stage"
+      "prod" : "prod"
+    include: "infrastructure"
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+myrealtrip:
+  service:
+    name: skeleton-project
+    version: 2021.09.28.01
+---
+spring:
+  config:
+    activate:
+      on-profile: "local"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "test"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "stage"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "prod"

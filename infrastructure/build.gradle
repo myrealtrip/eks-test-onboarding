@@ -1,0 +1,53 @@
+plugins {
+    id "org.flywaydb.flyway" version "${flywayVersion}"
+}
+dependencies {
+    implementation(project(":core"))
+
+    // DB
+    implementation("mysql:mysql-connector-java:${mysqlConnectorVersion}")
+    implementation("org.flywaydb:flyway-core:${flywayVersion}")
+
+    // KMS
+    implementation("com.amazonaws:aws-java-sdk-kms:$awsSdkVersion")
+    implementation("com.amazonaws:aws-encryption-sdk-java:$awsEncryptionSdkVersion")
+
+    // Spring
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+    
+    // JPA
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // MyBatis
+    implementation("org.mybatis:mybatis:${mybatisVersion}")
+    implementation("org.mybatis:mybatis-spring:${springMybatisVersion}")
+
+    // Redis
+    implementation("org.springframework.data:spring-data-redis:${springDataVersion}")
+    implementation("org.redisson:redisson:${redissonVersion}")
+    implementation("org.redisson:redisson-spring-data-25:${redissonSpringDataVersion}")
+    implementation("de.ruedigermoeller:fst:${fstVersion}") // fst codec
+    implementation("com.esotericsoftware:kryo:${kryoVersion}") // kryo codec
+
+    // Mapstruct
+    implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+
+    // Kafka
+    implementation("org.springframework.kafka:spring-kafka:${springKafkaVersion}")
+
+    // ElasticSearch
+    implementation("org.springframework.data:spring-data-elasticsearch:${springElasticSearchVersion}")
+
+    // HttpClient (Retrofit)
+    implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
+    implementation("com.squareup.retrofit2:converter-jackson:${retrofitJacksonVersion}")
+
+    // MongoDB
+    implementation("org.springframework.data:spring-data-mongodb:${springMongodbVersion}")
+    implementation("org.mongodb:mongo-java-driver:${mongodbDriverVersion}")
+
+    // Myrealtrip
+    implementation("com.myrealtrip.cipher:mrt-cipher:${mrtCipherVersion}")
+
+}

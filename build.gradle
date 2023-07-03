@@ -1,0 +1,111 @@
+plugins {
+    id "java-library"
+    id "idea"
+    id "io.spring.dependency-management" version "${springGradleDependencyManagementVersion}"
+    id "org.springframework.boot" version "${springBootVersion}"
+    id "org.sonarqube" version "${sonarQubeVersion}"
+}
+
+description "Java 개발 표준 프로젝트 템플릿"
+defaultTasks("build")
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "${sonarQubeProjectKey}"
+        property "sonar.host.url", "${sonarQubeHost}"
+        property "sonar.login", "${sonarQubeLoginToken}"
+    }
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true;
+}
+
+allprojects {
+    group = ext.projectGroup
+    version = ext.baseVersion + ext.snapshotVersion
+
+    repositories {
+        maven {
+            url "https://nexus.dev-myrealtrip.net/repository/maven-public/"
+        }
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "idea"
+    apply plugin: "io.spring.dependency-management"
+
+    def javaVersion = JavaVersion.VERSION_17
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    task initSourceFolders {
+        sourceSets*.java.srcDirs*.each {
+            if (!it.exists()) {
+                it.mkdirs()
+            }
+        }
+
+        sourceSets*.resources.srcDirs*.each {
+            if (!it.exists()) {
+                it.mkdirs()
+            }
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+        }
+        dependencies {
+            dependency("org.projectlombok:lombok:${lombokVersion}")
+        }
+    }
+
+    dependencies {
+        // JetBrains Annotation Processor
+        compileOnly("org.jetbrains:annotations:${jetBrainAnnotationsVersion}")
+        annotationProcessor("org.jetbrains:annotations:${jetBrainAnnotationsVersion}")
+
+        // Lombok
+        compileOnly("org.projectlombok:lombok")
+        annotationProcessor("org.projectlombok:lombok")
+        testCompileOnly("org.projectlombok:lombok")
+        testAnnotationProcessor("org.projectlombok:lombok")
+
+        // Logging
+        implementation("org.slf4j:slf4j-api")
+        implementation("ch.qos.logback:logback-classic")
+
+        // 단위 테스트는 JUnit 5를 사용합니다.
+        testImplementation("org.junit.jupiter:junit-jupiter")
+        testImplementation("org.junit.jupiter:junit-jupiter-migrationsupport")
+        testRuntimeOnly("org.junit.platform:junit-platform-engine")
+
+        // Assertions
+        testImplementation("org.assertj:assertj-core")
+
+        // mock library for java
+        testImplementation("org.mockito:mockito-core")
+        testImplementation("org.mockito:mockito-junit-jupiter")
+    }
+
+    test {
+        // Use junit platform for unit tests
+        useJUnitPlatform()
+
+        testLogging {
+            "failed"
+        }
+
+        systemProperty("spring.profiles.active", "test")
+    }
+}
