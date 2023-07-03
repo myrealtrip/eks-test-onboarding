@@ -26,7 +26,7 @@ pipeline {
                     dockerfile         : 'Dockerfile-spring-boot',
                     dockerfileBuildArgs: [
                         'SUB_MODULE_NAME': 'api',
-                        'JAVA_VERSION'   : '17'
+                        'JAVA_VERSION'   : '11'
                     ]
                 ])
             }
