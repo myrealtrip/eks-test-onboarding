@@ -1,0 +1,35 @@
+@Library('mrt3-jenkins-library@master') _
+
+pipeline {
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(
+            logRotator(
+                numToKeepStr: '10',
+                daysToKeepStr: '30',
+            )
+        )
+    }
+
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'develop', description: '이 브랜치 기준으로 빌드합니다')
+    }
+
+    stages {
+        stage('Docker Build') {
+            steps {
+                mrtEksBuildDocker([
+                    project            : 'eks-test-onboarding',
+                    component          : 'api',
+                    dockerfile         : 'Dockerfile-spring-boot',
+                    dockerfileBuildArgs: [
+                        'SUB_MODULE_NAME': 'api',
+                        'JAVA_VERSION'   : '17'
+                    ]
+                ])
+            }
+        }
+    }
+}
